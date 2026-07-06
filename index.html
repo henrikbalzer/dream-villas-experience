@@ -136,10 +136,9 @@
   .ft .info{font-size:14px;color:var(--mute);text-align:right;line-height:1.8;}
   .ft .info a:hover{color:var(--glow-soft);}
 
-  /* reveal (progressive: hidden only when JS is active, so no-JS shows everything) */
-  .rev{transition:opacity 1s var(--ease),transform 1s var(--ease);}
-  html.js .rev{opacity:0;transform:translateY(28px);}
-  .rev.in{opacity:1;transform:none;}
+  /* Inhalt IMMER sichtbar, kompromisslos. Kein JS-gesteuertes Verstecken mehr
+     (ein Spezifitäts-Bug hatte zuvor den gesamten Fließtext dauerhaft unsichtbar gemacht). */
+  .rev{opacity:1 !important;transform:none !important;}
   @media(prefers-reduced-motion:reduce){
     *{animation:none !important;transition:none !important;scroll-behavior:auto !important;}
     .rev,.hero-in{opacity:1 !important;transform:none !important;}
