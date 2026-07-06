@@ -55,11 +55,11 @@
   .hero-in{position:relative;z-index:3;padding-bottom:9vh;max-width:900px;}
   .kicker{font-family:'Manrope';font-weight:600;font-size:13px;letter-spacing:.32em;text-transform:uppercase;
     color:var(--glow-soft);margin:0 0 22px;opacity:0;animation:rise 1s var(--ease) .2s forwards;}
-  .hero h1{font-size:clamp(44px,8vw,104px);color:var(--ivory);margin:0 0 22px;letter-spacing:-.01em;
+  .hero h1{font-size:clamp(40px,6.6vw,82px);color:var(--ivory);margin:0 0 22px;letter-spacing:-.01em;
     text-shadow:0 2px 40px rgba(4,20,29,.6);}
   .hero h1 em{font-style:italic;color:var(--glow-soft);text-shadow:0 0 44px rgba(63,199,216,.45);}
   .hero h1 .l{display:block;opacity:0;transform:translateY(30px);animation:rise 1.1s var(--ease) forwards;}
-  .hero h1 .l:nth-child(1){animation-delay:.35s;} .hero h1 .l:nth-child(2){animation-delay:.55s;}
+  .hero h1 .l:nth-child(1){animation-delay:.35s;} .hero h1 .l:nth-child(2){animation-delay:.55s;} .hero h1 .l:nth-child(3){animation-delay:.72s;}
   .hero .sub{font-size:clamp(16px,1.9vw,20px);max-width:44ch;color:rgba(234,244,245,.9);margin:0;font-weight:400;
     opacity:0;animation:rise 1.1s var(--ease) .8s forwards;}
   @keyframes rise{to{opacity:1;transform:none;}}
@@ -161,7 +161,7 @@
   <div class="veil"></div>
   <div class="wrap hero-in">
     <p class="kicker">Cape Coral · Florida</p>
-    <h1><span class="l">Wo das Wasser</span><span class="l"><em>vor der Tür</em> beginnt.</span></h1>
+    <h1><span class="l">Wo das Wasser</span><span class="l"><em>vor der Tür</em></span><span class="l">beginnt.</span></h1>
     <p class="sub">Villa La Favorita liegt direkt am Kanal, mit eigenem Steg. Von hier gehört das Wasser zu deinem Zuhause.</p>
   </div>
 </header>
@@ -177,7 +177,6 @@
 <section class="split">
   <div class="media"><img src="img/pool.jpg" alt="Poolbereich der Villa La Favorita"></div>
   <div class="txt rev">
-    <p class="eyebrow">Villa La Favorita</p>
     <h2 class="h2">Drei Schlafzimmer, <em>ein eigener Steg.</em></h2>
     <p class="lead">Ein Grundstück am Kanal, nach Süden ausgerichtet, den ganzen Tag Sonne. Der private Anlegesteg liegt direkt am Wasser, der Yachthafen Cape Harbour einen Steinwurf entfernt.</p>
     <div class="amrow">
@@ -189,11 +188,10 @@
 <!-- MAP CENTERPIECE -->
 <section class="mapwrap" id="umgebung">
   <div class="map-fallback" id="mapFallback" style="background-image:linear-gradient(180deg,rgba(4,20,29,.35),rgba(4,20,29,.8)),url('img/aerial.jpg')">
-    <div class="fb"><p class="eyebrow" style="color:var(--glow-soft)">Die Umgebung</p><p>Hier lädt gleich die interaktive 3D-Karte von Cape Coral.</p></div>
+    <div class="fb"><p>Hier lädt gleich die interaktive 3D-Karte von Cape Coral.</p></div>
   </div>
   <div id="map"></div>
   <div class="map-overlay">
-    <p class="eyebrow">Die Umgebung</p>
     <h2 class="h2">Mitten in Südwest-Florida.</h2>
     <p>Vom Steg in Minuten auf offenem Wasser. Ringsum die Inseln, für die man herkommt.</p>
   </div>
