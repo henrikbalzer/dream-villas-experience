@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dream Villas Cape Coral — Am Wasser</title>
+<meta name="description" content="Villa La Favorita in Cape Coral. Direkt am Kanal, mit eigenem Steg, mitten in der Umgebung von Sanibel, Captiva und dem Golf.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://api.mapbox.com/mapbox-gl-js/v3.7.0/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.7.0/mapbox-gl.js"></script>
+
+<style>
+  :root{
+    --night:#04141d; --deep:#061f2b; --petrol:#0A2A3D; --surface:#0e3346;
+    --glow:#3FC7D8; --glow-soft:#6fd8e5; --teal-deep:#12586a;
+    --ivory:#EAF4F5; --mute:#8BA6B1; --line:rgba(120,200,215,.16);
+    --ease:cubic-bezier(.19,1,.22,1);
+    color-scheme:dark;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--night);color:var(--ivory);
+    font-family:'Manrope',system-ui,sans-serif;font-weight:400;line-height:1.65;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  h1,h2,h3,.pf{font-family:'Playfair Display',Georgia,serif;font-weight:600;line-height:1.06;}
+  img{display:block;max-width:100%;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 30px;}
+  @media(max-width:600px){.wrap{padding:0 20px;}}
+
+  /* nav */
+  .nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+    padding:22px 30px;transition:background .4s var(--ease),padding .4s var(--ease),backdrop-filter .4s;}
+  .nav.solid{background:rgba(4,20,29,.72);backdrop-filter:blur(12px) saturate(140%);padding:14px 30px;border-bottom:1px solid var(--line);}
+  .brand{font-family:'Playfair Display',serif;font-weight:600;font-size:21px;letter-spacing:.02em;color:var(--ivory);}
+  .brand em{font-style:italic;color:var(--glow-soft);}
+  .navcta{font-family:'Manrope';font-weight:600;font-size:14px;letter-spacing:.02em;color:var(--night);
+    background:var(--glow);padding:11px 22px;border-radius:100px;transition:transform .3s var(--ease),box-shadow .3s;}
+  .navcta:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(63,199,216,.35);}
+  @media(max-width:600px){.nav{padding:16px 20px;}}
+
+  /* hero */
+  .hero{position:relative;height:100vh;height:100dvh;min-height:620px;overflow:hidden;display:flex;align-items:flex-end;}
+  .hero .bg{position:absolute;inset:0;z-index:0;}
+  .hero .bg img{width:100%;height:100%;object-fit:cover;transform:scale(1.08);
+    animation:kb 26s var(--ease) infinite alternate;filter:brightness(.62) saturate(1.05) contrast(1.02);}
+  @keyframes kb{from{transform:scale(1.08) translateY(0);}to{transform:scale(1.18) translateY(-2%);}}
+  .hero canvas{position:absolute;inset:0;z-index:1;mix-blend-mode:screen;opacity:.5;pointer-events:none;}
+  .hero .veil{position:absolute;inset:0;z-index:2;
+    background:radial-gradient(120% 90% at 70% 12%,rgba(63,199,216,.14),transparent 46%),
+      linear-gradient(180deg,rgba(4,20,29,.55) 0%,rgba(4,20,29,.12) 34%,rgba(4,20,29,.86) 100%);}
+  .hero-in{position:relative;z-index:3;padding-bottom:9vh;max-width:900px;}
+  .kicker{font-family:'Manrope';font-weight:600;font-size:13px;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--glow-soft);margin:0 0 22px;opacity:0;animation:rise 1s var(--ease) .2s forwards;}
+  .hero h1{font-size:clamp(44px,8vw,104px);color:var(--ivory);margin:0 0 22px;letter-spacing:-.01em;
+    text-shadow:0 2px 40px rgba(4,20,29,.6);}
+  .hero h1 em{font-style:italic;color:var(--glow-soft);text-shadow:0 0 44px rgba(63,199,216,.45);}
+  .hero h1 .l{display:block;opacity:0;transform:translateY(30px);animation:rise 1.1s var(--ease) forwards;}
+  .hero h1 .l:nth-child(1){animation-delay:.35s;} .hero h1 .l:nth-child(2){animation-delay:.55s;}
+  .hero .sub{font-size:clamp(16px,1.9vw,20px);max-width:44ch;color:rgba(234,244,245,.9);margin:0;font-weight:400;
+    opacity:0;animation:rise 1.1s var(--ease) .8s forwards;}
+  @keyframes rise{to{opacity:1;transform:none;}}
+
+  /* sections */
+  section{position:relative;}
+  .band{padding:120px 0;}
+  @media(max-width:700px){.band{padding:76px 0;}}
+  .eyebrow{font-family:'Manrope';font-weight:600;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--glow);margin:0 0 18px;}
+  .h2{font-size:clamp(30px,4.6vw,56px);color:var(--ivory);margin:0 0 22px;letter-spacing:-.01em;}
+  .h2 em{font-style:italic;color:var(--glow-soft);}
+  .lead{font-size:clamp(16px,1.6vw,19px);color:var(--mute);max-width:56ch;margin:0;line-height:1.7;}
+
+  /* intro statement centered */
+  .statement{text-align:center;padding:150px 0;background:
+    radial-gradient(80% 60% at 50% 0%,rgba(18,88,106,.30),transparent 60%),var(--night);}
+  .statement .big{font-size:clamp(28px,4.4vw,52px);max-width:20ch;margin:0 auto;color:var(--ivory);line-height:1.18;}
+  .statement .big em{font-style:italic;color:var(--glow-soft);}
+
+  /* villa split */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:stretch;}
+  .split .media{position:relative;overflow:hidden;min-height:520px;}
+  .split .media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.9);}
+  .split .txt{padding:90px 70px;display:flex;flex-direction:column;justify-content:center;background:var(--deep);}
+  @media(max-width:860px){.split{grid-template-columns:1fr;}.split .media{min-height:340px;}.split .txt{padding:56px 26px;}}
+  .amrow{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:26px;}
+  .amrow span{font-size:14px;color:var(--ivory);opacity:.85;display:flex;align-items:center;gap:8px;}
+  .amrow span::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--glow);box-shadow:0 0 10px var(--glow);}
+
+  /* MAP centerpiece */
+  .mapwrap{position:relative;height:88vh;height:88dvh;min-height:560px;background:var(--petrol);}
+  #map{position:absolute;inset:0;width:100%;height:100%;}
+  .map-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;
+    background:linear-gradient(180deg,rgba(4,20,29,.2),rgba(4,20,29,.75)),center/cover no-repeat;}
+  .map-fallback .fb{max-width:30ch;padding:24px;}
+  .map-fallback .fb p{color:var(--ivory);font-size:15px;}
+  .map-overlay{position:absolute;left:0;top:0;z-index:5;padding:60px;pointer-events:none;max-width:560px;}
+  .map-overlay .eyebrow{color:var(--glow-soft);}
+  .map-overlay h2{color:#fff;text-shadow:0 2px 30px rgba(0,0,0,.6);}
+  .map-overlay p{color:rgba(255,255,255,.9);text-shadow:0 1px 20px rgba(0,0,0,.7);max-width:40ch;}
+  @media(max-width:700px){.map-overlay{padding:28px;}}
+  .mk{width:16px;height:16px;border-radius:50%;background:var(--glow);border:2px solid #fff;
+    box-shadow:0 0 0 5px rgba(63,199,216,.28),0 0 18px rgba(63,199,216,.8);cursor:pointer;}
+  .mk.villa{width:22px;height:22px;background:#fff;border-color:var(--glow);box-shadow:0 0 0 7px rgba(63,199,216,.35),0 0 26px rgba(63,199,216,.9);}
+  .mklabel{font-family:'Manrope';font-weight:600;font-size:12px;color:#fff;background:rgba(4,20,29,.82);
+    padding:5px 10px;border-radius:6px;border:1px solid var(--line);white-space:nowrap;transform:translateY(-2px);}
+
+  /* surroundings cards */
+  .spots{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:46px;}
+  .spot{background:var(--deep);border:1px solid var(--line);border-radius:14px;padding:26px 24px;transition:transform .4s var(--ease),border-color .4s;}
+  .spot:hover{transform:translateY(-5px);border-color:rgba(63,199,216,.5);}
+  .spot .n{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;color:var(--ivory);margin:0 0 8px;}
+  .spot .d{font-size:14px;color:var(--mute);margin:0;line-height:1.6;}
+  .spot .meta{font-size:12px;color:var(--glow);letter-spacing:.08em;margin-top:16px;text-transform:uppercase;font-weight:600;}
+  @media(max-width:900px){.spots{grid-template-columns:1fr 1fr;}}
+  @media(max-width:520px){.spots{grid-template-columns:1fr;}}
+
+  /* final CTA */
+  .final{position:relative;text-align:center;padding:150px 0;overflow:hidden;}
+  .final .bg{position:absolute;inset:0;z-index:0;}
+  .final .bg img{width:100%;height:100%;object-fit:cover;filter:brightness(.4) saturate(1.1);}
+  .final .veil{position:absolute;inset:0;z-index:1;background:radial-gradient(70% 90% at 50% 40%,rgba(4,20,29,.5),rgba(4,20,29,.9));}
+  .final .in{position:relative;z-index:2;}
+  .final h2{font-size:clamp(34px,5.4vw,64px);color:#fff;margin:0 0 16px;}
+  .final h2 em{font-style:italic;color:var(--glow-soft);}
+  .final p{color:rgba(234,244,245,.86);margin:0 0 32px;font-size:18px;}
+  .bigcta{display:inline-flex;align-items:center;gap:12px;font-family:'Manrope';font-weight:600;font-size:17px;
+    color:var(--night);background:var(--glow);padding:17px 40px;border-radius:100px;transition:transform .3s var(--ease),box-shadow .3s;}
+  .bigcta:hover{transform:translateY(-3px);box-shadow:0 16px 44px rgba(63,199,216,.4);}
+
+  footer{background:var(--night);padding:50px 0 40px;border-top:1px solid var(--line);}
+  .ft{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:center;}
+  .ft .brand{font-size:19px;}
+  .ft .info{font-size:14px;color:var(--mute);text-align:right;line-height:1.8;}
+  .ft .info a:hover{color:var(--glow-soft);}
+
+  /* reveal (progressive: hidden only when JS is active, so no-JS shows everything) */
+  .rev{transition:opacity 1s var(--ease),transform 1s var(--ease);}
+  html.js .rev{opacity:0;transform:translateY(28px);}
+  .rev.in{opacity:1;transform:none;}
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none !important;transition:none !important;scroll-behavior:auto !important;}
+    .rev{opacity:1;transform:none;} .kicker,.hero h1 .l,.hero .sub{opacity:1 !important;transform:none !important;}
+    .hero .bg img{animation:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="brand">Dream <em>Villas</em></div>
+  <a class="navcta" href="#anfragen">Anfragen</a>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="bg"><img src="img/aerial.jpg" alt="Villa La Favorita aus der Luft, Kanal und Steg bei Abendlicht"></div>
+  <canvas id="water"></canvas>
+  <div class="veil"></div>
+  <div class="wrap hero-in">
+    <p class="kicker">Cape Coral · Florida</p>
+    <h1><span class="l">Wo das Wasser</span><span class="l"><em>vor der Tür</em> beginnt.</span></h1>
+    <p class="sub">Villa La Favorita liegt direkt am Kanal, mit eigenem Steg. Von hier gehört das Wasser zu deinem Zuhause.</p>
+  </div>
+</header>
+
+<!-- STATEMENT -->
+<section class="statement">
+  <div class="wrap rev">
+    <p class="big">Morgens ein Kaffee am Pool. Mittags mit dem Boot vom eigenen Steg hinaus auf den Golf. <em>Abends die Stille am Kanal.</em></p>
+  </div>
+</section>
+
+<!-- VILLA SPLIT -->
+<section class="split">
+  <div class="media"><img src="img/pool.jpg" alt="Poolbereich der Villa La Favorita"></div>
+  <div class="txt rev">
+    <p class="eyebrow">Villa La Favorita</p>
+    <h2 class="h2">Drei Schlafzimmer, <em>ein eigener Steg.</em></h2>
+    <p class="lead">Ein Grundstück am Kanal, nach Süden ausgerichtet, den ganzen Tag Sonne. Der private Anlegesteg liegt direkt am Wasser, der Yachthafen Cape Harbour einen Steinwurf entfernt.</p>
+    <div class="amrow">
+      <span>Privater Pool</span><span>Eigener Bootssteg</span><span>6 Gäste</span><span>Grill &amp; Lanai</span>
+    </div>
+  </div>
+</section>
+
+<!-- MAP CENTERPIECE -->
+<section class="mapwrap" id="umgebung">
+  <div class="map-fallback" id="mapFallback" style="background-image:linear-gradient(180deg,rgba(4,20,29,.35),rgba(4,20,29,.8)),url('img/aerial.jpg')">
+    <div class="fb"><p class="eyebrow" style="color:var(--glow-soft)">Die Umgebung</p><p>Hier lädt gleich die interaktive 3D-Karte von Cape Coral.</p></div>
+  </div>
+  <div id="map"></div>
+  <div class="map-overlay">
+    <p class="eyebrow">Die Umgebung</p>
+    <h2 class="h2">Mitten in Südwest-Florida.</h2>
+    <p>Vom Steg in Minuten auf offenem Wasser. Ringsum die Inseln, für die man herkommt.</p>
+  </div>
+</section>
+
+<!-- SURROUNDINGS -->
+<section class="band">
+  <div class="wrap">
+    <div class="rev">
+      <p class="eyebrow">Vor der Haustür</p>
+      <h2 class="h2">Was in Reichweite liegt.</h2>
+    </div>
+    <div class="spots rev">
+      <div class="spot"><p class="n">Sanibel &amp; Captiva</p><p class="d">Die Muschelstrände, für die Südwest-Florida bekannt ist. Muscheln liegen hier noch am Ufer.</p><p class="meta">per Boot &amp; Auto</p></div>
+      <div class="spot"><p class="n">Cape Harbour</p><p class="d">Der Yachthafen mit Restaurants und Tiki-Bar, zu Fuß oder mit dem Rad erreichbar.</p><p class="meta">wenige Minuten</p></div>
+      <div class="spot"><p class="n">Pine Island</p><p class="d">Ruhige Fischerorte, Mangroven und Wasser, so weit man schaut. Ein Tag zum Durchatmen.</p><p class="meta">Bootstour</p></div>
+      <div class="spot"><p class="n">Fort Myers Beach</p><p class="d">Breiter Strand, Strandbars und Trubel, wenn dir nach einem lebhaften Tag ist.</p><p class="meta">Ausflug</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final" id="anfragen">
+  <div class="bg"><img src="img/lanai.jpg" alt="Lanai der Villa am Abend"></div>
+  <div class="veil"></div>
+  <div class="wrap in rev">
+    <h2>Deine Woche <em>am Wasser.</em></h2>
+    <p>Villa La Favorita, ab 1.100 $ pro Woche. 20 Prozent Rabatt auf Buchungen bis zum 31. August.</p>
+    <a class="bigcta" href="mailto:villas@wernerlau.org">Jetzt anfragen</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap ft">
+    <div class="brand">Dream <em>Villas</em> Cape Coral</div>
+    <div class="info">
+      <a href="mailto:villas@wernerlau.org">villas@wernerlau.org</a> · <a href="tel:+4941822389600">+49 4182 238 96 00</a><br>
+      Cape Coral, Florida · Entwurf zur Ansicht
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.documentElement.className += ' js';
+
+  /* === Mapbox token: leer lassen bis Henriks Token da ist === */
+  var MAPBOX_TOKEN = "";  // <-- hier den pk.-Token einsetzen
+
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* nav solid on scroll */
+  var nav=document.getElementById('nav');
+  var onScroll=function(){ nav.classList.toggle('solid', window.scrollY>40); };
+  onScroll(); window.addEventListener('scroll',onScroll,{passive:true});
+
+  /* reveal */
+  if('IntersectionObserver'in window){
+    var ro=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target);}});},{threshold:.14});
+    document.querySelectorAll('.rev').forEach(function(el){ro.observe(el);});
+  } else { document.querySelectorAll('.rev').forEach(function(el){el.classList.add('in');}); }
+
+  /* hero water shimmer (canvas, light + reliable) */
+  (function(){
+    var c=document.getElementById('water'); if(!c) return; var ctx=c.getContext('2d');
+    var w,h,dpr=Math.min(window.devicePixelRatio||1,2);
+    function size(){w=c.clientWidth;h=c.clientHeight;c.width=w*dpr;c.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);}
+    size(); window.addEventListener('resize',size);
+    var lines=[];for(var i=0;i<7;i++)lines.push({y:Math.random(),a:0.04+Math.random()*0.06,s:0.2+Math.random()*0.5,p:Math.random()*6.28,amp:8+Math.random()*22});
+    var t=0, run=!reduce;
+    function frame(){
+      ctx.clearRect(0,0,w,h);
+      for(var i=0;i<lines.length;i++){var L=lines[i];var yy=(L.y*h)+Math.sin(t*L.s+L.p)*L.amp;
+        var g=ctx.createLinearGradient(0,yy-40,0,yy+40);
+        g.addColorStop(0,'rgba(111,216,229,0)');g.addColorStop(.5,'rgba(111,216,229,'+L.a+')');g.addColorStop(1,'rgba(111,216,229,0)');
+        ctx.fillStyle=g;ctx.fillRect(0,yy-40,w,80);}
+      t+=0.012; if(run) requestAnimationFrame(frame);
+    }
+    frame();
+  })();
+
+  /* Mapbox 3D fly-in (centerpiece) */
+  (function(){
+    var VILLA=[-82.0083,26.5567];
+    var spots=[
+      {c:VILLA,label:'Villa La Favorita',villa:true},
+      {c:[-82.107,26.448],label:'Sanibel'},
+      {c:[-82.188,26.525],label:'Captiva'},
+      {c:[-82.152,26.612],label:'Pine Island'},
+      {c:[-81.950,26.452],label:'Fort Myers Beach'}
+    ];
+    if(!MAPBOX_TOKEN || !window.mapboxgl){ return; }  // ohne Token: Fallback-Bild bleibt sichtbar
+    document.getElementById('mapFallback').style.display='none';
+    mapboxgl.accessToken=MAPBOX_TOKEN;
+    var map=new mapboxgl.Map({
+      container:'map', style:'mapbox://styles/mapbox/satellite-streets-v12',
+      center:[-82.2,26.7], zoom:7.4, pitch:0, bearing:0, attributionControl:true, cooperativeGestures:true
+    });
+    map.on('load',function(){
+      map.addSource('dem',{type:'raster-dem',url:'mapbox://mapbox.mapbox-terrain-dem-v1',tileSize:512,maxzoom:14});
+      map.setTerrain({source:'dem',exaggeration:1.2});
+      spots.forEach(function(s){
+        var el=document.createElement('div'); el.className='mk'+(s.villa?' villa':'');
+        new mapboxgl.Marker({element:el}).setLngLat(s.c)
+          .setPopup(new mapboxgl.Popup({offset:18,closeButton:false}).setHTML('<div class="mklabel">'+s.label+'</div>'))
+          .addTo(map);
+      });
+    });
+    var flew=false;
+    var mo=new IntersectionObserver(function(es){es.forEach(function(e){
+      if(e.isIntersecting && !flew){ flew=true;
+        map.flyTo(reduce?{center:VILLA,zoom:14,pitch:0,duration:0}:{center:VILLA,zoom:14.4,pitch:62,bearing:-18,duration:7000,curve:1.5,essential:true});
+      }});},{threshold:.35});
+    mo.observe(document.getElementById('umgebung'));
+  })();
+</script>
+</body>
+</html>
